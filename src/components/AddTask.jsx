@@ -6,11 +6,11 @@ function AddTask() {
       <div className="add-task-backdrop"></div>
       <h1 className="heading">Add Task</h1>
       <div className="input-group">
-        <label for="task-input"> Task </label>
+        <label htmlFor="task-input"> Task </label>
         <input type="text" id="task-input" required />
       </div>
       <div className="input-group">
-        <label for="category-select"> Category </label>
+        <label htmlFor="category-select"> Category </label>
         <select id="category-select"></select>
       </div>
       <div className="btns">
