@@ -1,6 +1,7 @@
 import React from "react";
+import boy from "../assets/images/boy.png";
 
-function HomeScreen() {
+function HomeScreen({ toggleCategory }) {
   return (
     <div className="home-screen screen">
       <div className="head-wrapper">
@@ -9,13 +10,13 @@ function HomeScreen() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
             className="w-6 h-6"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
             />
           </svg>
@@ -29,15 +30,15 @@ function HomeScreen() {
           </div>
           <div className="img">
             <div className="backdrop"></div>
-            <img src="images/boy.png" alt="" />
+            <img src={boy} alt="" />
           </div>
         </div>
       </div>
       <div className="categories-wrapper">
-        <div className="categories">
+        <div className="categories" onClick={toggleCategory}>
           <div className="category">
             <div className="left">
-              <img src="images/boy.png" alt="sun" />
+              <img src={boy} alt="sun" />
               <div className="content">
                 <h1>Personal</h1>
                 <p>5 Tasks</p>
@@ -49,13 +50,13 @@ function HomeScreen() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
                   />
                 </svg>
