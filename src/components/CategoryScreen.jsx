@@ -1,11 +1,11 @@
 import React from "react";
 import boy from "../assets/images/boy.png";
 
-function CategoryScreen() {
+function CategoryScreen({ toggleScreen }) {
   return (
     <div className="category-screen screen">
       <div className="head-wrapper">
-        <div className="back-btn">
+        <div className="back-btn" onClick={toggleScreen}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

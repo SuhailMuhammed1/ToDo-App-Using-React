@@ -33,7 +33,7 @@ function App() {
     <div className={`wrapper ${category ? "show-category" : ""}`}>
       <div className="screen-backdrop"></div>
       <HomeScreen toggleScreen={toggleScreen} />
-      <CategoryScreen />
+      <CategoryScreen toggleScreen={toggleScreen} />
       <div
         className={`add-task-btn ${addTask ? "active" : ""}`}
         onClick={toggleAddTask}
