@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
 import CategoryScreen from "./components/CategoryScreen";
@@ -6,17 +6,38 @@ import AddTask from "./components/AddTask";
 
 function App() {
   const [category, setCategory] = useState(false);
+  const [addTask, setAddTask] = useState(false);
 
-  const toggleCategory = () => {
+  const toggleScreen = () => {
     setCategory(!category);
   };
+
+  const toggleAddTask = () => {
+    setAddTask(!addTask);
+  };
+
+  const handleClickOutside = () => {
+    if (addTask) {
+      setAddTask(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [addTask]);
 
   return (
     <div className={`wrapper ${category ? "show-category" : ""}`}>
       <div className="screen-backdrop"></div>
-      <HomeScreen toggleCategory={toggleCategory} />
+      <HomeScreen toggleScreen={toggleScreen} />
       <CategoryScreen />
-      <div className="add-task-btn">
+      <div
+        className={`add-task-btn ${addTask ? "active" : ""}`}
+        onClick={toggleAddTask}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -32,8 +53,8 @@ function App() {
           />
         </svg>
       </div>
-      <div className="black-backdrop"></div>
-      <AddTask />
+      <div className={`black-backdrop ${addTask ? "active" : ""}`}></div>
+      <AddTask addTask={addTask} />
     </div>
   );
 }

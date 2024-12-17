@@ -1,7 +1,7 @@
 import React from "react";
 import boy from "../assets/images/boy.png";
 
-function HomeScreen({ toggleCategory }) {
+function HomeScreen({ toggleScreen }) {
   return (
     <div className="home-screen screen">
       <div className="head-wrapper">
@@ -35,7 +35,7 @@ function HomeScreen({ toggleCategory }) {
         </div>
       </div>
       <div className="categories-wrapper">
-        <div className="categories" onClick={toggleCategory}>
+        <div className="categories" onClick={toggleScreen}>
           <div className="category">
             <div className="left">
               <img src={boy} alt="sun" />
