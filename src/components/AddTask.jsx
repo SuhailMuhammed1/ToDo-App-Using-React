@@ -1,8 +1,8 @@
 import React from "react";
 
-function AddTask({ addTask }) {
+function AddTask({ addTasks }) {
   return (
-    <div className={`add-task ${addTask ? "active" : ""}`}>
+    <div className={`add-task ${addTasks ? "active" : ""}`}>
       <div className="add-task-backdrop"></div>
       <h1 className="heading">Add Task</h1>
       <div className="input-group">

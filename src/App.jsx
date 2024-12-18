@@ -3,22 +3,44 @@ import "./App.css";
 import HomeScreen from "./components/HomeScreen";
 import CategoryScreen from "./components/CategoryScreen";
 import AddTask from "./components/AddTask";
+import { categories, tasks } from "./components/Data";
 
 function App() {
-  const [category, setCategory] = useState(false);
-  const [addTask, setAddTask] = useState(false);
+  // const [category, setCategory] = useState(categories);
+  const [task, setTask] = useState(tasks);
+  const [addTasks, setAddTasks] = useState(false);
 
-  const toggleScreen = () => {
-    setCategory(!category);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showCategoryScreen, setShowCategoryScreen] = useState(false);
+
+  const toggleCategoryScreen = (category) => {
+    setSelectedCategory(category);
+    setShowCategoryScreen(!showCategoryScreen);
+  };
+
+  const addTask = (newTask) => {
+    setTask((prevTasks) => [...prevTasks, newTask]);
+  };
+
+  const deleteTask = (id) => {
+    setTask((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
+  const toggleTaskCompletion = (id) => {
+    setTask((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   const toggleAddTask = () => {
-    setAddTask(!addTask);
+    setAddTasks(!addTasks);
   };
 
   const handleClickOutside = () => {
-    if (addTask) {
-      setAddTask(null);
+    if (addTasks) {
+      setAddTasks(null);
     }
   };
 
@@ -27,15 +49,28 @@ function App() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [addTask]);
+  }, [addTasks]);
 
   return (
-    <div className={`wrapper ${category ? "show-category" : ""}`}>
+    <div className={`wrapper ${showCategoryScreen ? "show-category" : ""}`}>
       <div className="screen-backdrop"></div>
-      <HomeScreen toggleScreen={toggleScreen} />
-      <CategoryScreen toggleScreen={toggleScreen} />
+      <HomeScreen
+        categories={categories}
+        tasks={task}
+        toggleCategoryScreen={toggleCategoryScreen}
+      />
+      {selectedCategory && (
+        <CategoryScreen
+          category={selectedCategory}
+          tasks={task}
+          addTask={addTask}
+          deleteTask={deleteTask}
+          toggleTaskCompletion={toggleTaskCompletion}
+          back={() => setShowCategoryScreen(false)}
+        />
+      )}
       <div
-        className={`add-task-btn ${addTask ? "active" : ""}`}
+        className={`add-task-btn ${addTasks ? "active" : ""}`}
         onClick={toggleAddTask}
       >
         <svg
@@ -53,8 +88,8 @@ function App() {
           />
         </svg>
       </div>
-      <div className={`black-backdrop ${addTask ? "active" : ""}`}></div>
-      <AddTask addTask={addTask} />
+      <div className={`black-backdrop ${addTasks ? "active" : ""}`}></div>
+      <AddTask addTasks={addTasks} />
     </div>
   );
 }
