@@ -6,7 +6,6 @@ import AddTask from "./components/AddTask";
 import { categories, tasks } from "./components/Data";
 
 function App() {
-  // const [category, setCategory] = useState(categories);
   const [task, setTask] = useState(tasks);
   const [addTasks, setAddTasks] = useState(false);
 

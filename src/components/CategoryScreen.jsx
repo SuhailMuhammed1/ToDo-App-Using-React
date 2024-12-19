@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import boy from "../assets/images/boy.png";
 
 function CategoryScreen({
   category,
