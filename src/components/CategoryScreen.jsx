@@ -50,7 +50,7 @@ function CategoryScreen({
       <div className="category-details">
         <img src={category.img} alt={category.title} id="category-img" />
         <div className="details">
-          <p id="num-tasks">8 tasks</p>
+          <p id="num-tasks">{categoryTasks.length} tasks</p>
           <h1 id="category-title">{category.title}</h1>
         </div>
       </div>
@@ -59,15 +59,14 @@ function CategoryScreen({
           {categoryTasks.length > 0 ? (
             categoryTasks.map((task) => (
               <div className="task-wrapper" key={task.id}>
-                <label htmlFor="task" className="task">
+                <label htmlFor={`task-${task.id}`} className="task">
                   <input
                     type="checkbox"
-                    name="task"
-                    id="task"
+                    name={`task-${task.id}`}
+                    id={`task-${task.id}`}
                     checked={task.completed}
                     onChange={() => toggleTaskCompletion(task.id)}
                   />
-                  {/* {task.completed ? "Undo" : "Complete"} */}
                   <span className="checkmark">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +104,7 @@ function CategoryScreen({
               </div>
             ))
           ) : (
-            <p className="no-tasks">No tasks added for this category</p>
+            <p className="no-tasks">No tasks added in {category.title}</p>
           )}
         </div>
       </div>

@@ -4,6 +4,8 @@ import HomeScreen from "./components/HomeScreen";
 import CategoryScreen from "./components/CategoryScreen";
 import AddTask from "./components/AddTask";
 import { categories, tasks } from "./components/Data";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [task, setTask] = useState(tasks);
@@ -25,6 +27,9 @@ function App() {
 
   const deleteTask = (id) => {
     setTask((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    toast.success("Task deleted!", {
+      toastId: "taskDeleted",
+    });
   };
 
   const toggleTaskCompletion = (id) => {
@@ -33,6 +38,9 @@ function App() {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
+    toast.success("Task completed!", {
+      toastId: "taskCompleted",
+    });
   };
 
   const toggleAddTask = () => {
@@ -54,6 +62,7 @@ function App() {
 
   return (
     <div className={`wrapper ${showCategoryScreen ? "show-category" : ""}`}>
+      <ToastContainer position="top-center" draggable />
       <div className="screen-backdrop"></div>
       <HomeScreen
         categories={categories}

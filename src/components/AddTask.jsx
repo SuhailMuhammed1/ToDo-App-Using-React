@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddTask({
   addTasks,
@@ -11,7 +13,19 @@ function AddTask({
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleAddTask = () => {
-    if (newTask.trim() && selectedCategory) {
+    if (!newTask.trim()) {
+      if (!toast.isActive("enterTask")) {
+        toast.error("Please enter a task", {
+          toastId: "enterTask",
+        });
+      }
+    } else if (!selectedCategory) {
+      if (!toast.isActive("selectCategory")) {
+        toast.error("Please select a category", {
+          toastId: "selectCategory",
+        });
+      }
+    } else {
       addNewTask({
         id: Date.now(),
         task: newTask,
@@ -20,6 +34,11 @@ function AddTask({
       });
       setNewTask("");
       setSelectedCategory("");
+      toast.success("Task added successfully!", {
+        toastId: "taskAdded",
+        position: "top-center",
+        draggable: true,
+      });
     }
   };
 
