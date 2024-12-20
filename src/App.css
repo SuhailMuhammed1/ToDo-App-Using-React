@@ -30,6 +30,11 @@ body {
 }
 
 @media (min-width:768px) {
+
+  /* body {
+    display: block;
+  } */
+
   .wrapper {
     height: 50rem;
     width: 25rem;

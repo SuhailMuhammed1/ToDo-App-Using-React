@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
 import CategoryScreen from "./components/CategoryScreen";
@@ -8,6 +8,7 @@ import { categories, tasks } from "./components/Data";
 function App() {
   const [task, setTask] = useState(tasks);
   const [addTasks, setAddTasks] = useState(false);
+  const addTaskRef = useRef(null);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showCategoryScreen, setShowCategoryScreen] = useState(false);
@@ -17,8 +18,9 @@ function App() {
     setShowCategoryScreen(!showCategoryScreen);
   };
 
-  const addTask = (newTask) => {
+  const addNewTask = (newTask) => {
     setTask((prevTasks) => [...prevTasks, newTask]);
+    setAddTasks(false);
   };
 
   const deleteTask = (id) => {
@@ -37,9 +39,9 @@ function App() {
     setAddTasks(!addTasks);
   };
 
-  const handleClickOutside = () => {
-    if (addTasks) {
-      setAddTasks(null);
+  const handleClickOutside = (event) => {
+    if (addTaskRef.current && !addTaskRef.current.contains(event.target)) {
+      setAddTasks(false);
     }
   };
 
@@ -48,7 +50,7 @@ function App() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [addTasks]);
+  }, []);
 
   return (
     <div className={`wrapper ${showCategoryScreen ? "show-category" : ""}`}>
@@ -62,7 +64,6 @@ function App() {
         <CategoryScreen
           category={selectedCategory}
           tasks={task}
-          addTask={addTask}
           deleteTask={deleteTask}
           toggleTaskCompletion={toggleTaskCompletion}
           back={() => setShowCategoryScreen(false)}
@@ -88,7 +89,13 @@ function App() {
         </svg>
       </div>
       <div className={`black-backdrop ${addTasks ? "active" : ""}`}></div>
-      <AddTask addTasks={addTasks} />
+      <AddTask
+        addTasks={addTasks}
+        addTaskRef={addTaskRef}
+        addNewTask={addNewTask}
+        categories={categories}
+        toggleAddTask={toggleAddTask}
+      />
     </div>
   );
 }

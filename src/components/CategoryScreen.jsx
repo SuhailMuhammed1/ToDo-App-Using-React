@@ -1,30 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
 function CategoryScreen({
   category,
   tasks,
-  addTask,
   deleteTask,
   toggleTaskCompletion,
   back,
 }) {
-  const [newTask, setNewTask] = useState("");
-
   const categoryTasks = tasks.filter(
     (task) => task.category.toLowerCase() === category.title.toLowerCase()
   );
-
-  const handleAddTask = () => {
-    if (newTask.trim()) {
-      addTask({
-        id: tasks.length + 1,
-        task: newTask,
-        category: category.title,
-        completed: false,
-      });
-      setNewTask("");
-    }
-  };
 
   return (
     <div className="category-screen screen">
