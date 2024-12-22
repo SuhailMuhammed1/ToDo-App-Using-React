@@ -7,6 +7,25 @@ import fitness from "../assets/images/dumbbell.png";
 import education from "../assets/images/education.png";
 import finance from "../assets/images/saving.png";
 
+export const categoryImages = [
+  { name: "Boy", img: boy },
+  { name: "Briefcase", img: briefcase },
+  { name: "Shopping", img: shopping },
+  { name: "Coding", img: coding },
+  { name: "Healthcare", img: healthcare },
+  { name: "Fitness", img: fitness },
+  { name: "Education", img: education },
+  { name: "Finance", img: finance },
+  { name: "Boy", img: boy },
+  { name: "Briefcase", img: briefcase },
+  { name: "Shopping", img: shopping },
+  { name: "Coding", img: coding },
+  { name: "Healthcare", img: healthcare },
+  { name: "Fitness", img: fitness },
+  { name: "Education", img: education },
+  { name: "Finance", img: finance },
+];
+
 export const categories = [
   {
     title: "Personal",
