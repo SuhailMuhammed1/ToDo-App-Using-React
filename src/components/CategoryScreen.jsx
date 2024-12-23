@@ -104,7 +104,7 @@ function CategoryScreen({
               </div>
             ))
           ) : (
-            <p className="no-tasks">No tasks added in {category.title}</p>
+            <p className="no-tasks">No tasks added in {category.title}!</p>
           )}
         </div>
       </div>

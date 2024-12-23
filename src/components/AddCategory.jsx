@@ -13,13 +13,23 @@ function AddCategory({
   const [selectedImg, setSelectedImg] = useState("");
 
   const handleAddCategory = () => {
-    if (!title.trim() || !selectedImg) {
-      alert("Please fill in all fields");
-      return;
+    if (!title.trim()) {
+      if (!toast.isActive("enterCategory")) {
+        toast.error("Please enter a category!!!", {
+          toastId: "enterCategory",
+        });
+      }
+    } else if (!selectedImg) {
+      if (!toast.isActive("enterCategoryImage")) {
+        toast.error("Please select an image!!!", {
+          toastId: "enterCategoryImage",
+        });
+      }
+    } else {
+      addNewCategory({ title, img: selectedImg });
+      setTitle("");
+      setSelectedImg("");
     }
-    addNewCategory({ title, img: selectedImg });
-    setTitle("");
-    setSelectedImg("");
   };
 
   return (
@@ -27,7 +37,7 @@ function AddCategory({
       className={`add-task ${addCategory ? "active" : ""}`}
       ref={addCategoryRef}
     >
-      <div className="add-task-backdrop"></div>
+      <div className="add-categories add-task-backdrop"></div>
       <h1 className="heading">Add Category</h1>
       <div className="input-group">
         <label htmlFor="task-input"> Category </label>
@@ -40,15 +50,17 @@ function AddCategory({
       </div>
       <div className="input-group">
         <label htmlFor="category-select"> Select Image </label>
-        {categoryImages.map((image, index) => (
-          <img
-            key={index}
-            src={image.img}
-            alt={image.name}
-            onClick={() => setSelectedImg(image.img)}
-            className={selectedImg === image.img ? "selected" : ""}
-          />
-        ))}
+        <div className="category-images">
+          {categoryImages.map((image, index) => (
+            <img
+              key={index}
+              src={image.img}
+              alt={image.name}
+              onClick={() => setSelectedImg(image.img)}
+              className={selectedImg === image.img ? "selected" : ""}
+            />
+          ))}
+        </div>
       </div>
       <div className="btns">
         <button className="cancel-btn" onClick={toggleAddCategory}>
