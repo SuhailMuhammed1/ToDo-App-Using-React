@@ -8,11 +8,18 @@ function AddCategory({
   categoryImages,
   addCategory,
   toggleAddCategory,
+  updateCategory,
+  isEditCategory = false,
+  existingCategory = null,
 }) {
-  const [title, setTitle] = useState("");
-  const [selectedImg, setSelectedImg] = useState("");
+  const [title, setTitle] = useState(
+    isEditCategory && existingCategory ? existingCategory.title : ""
+  );
+  const [selectedImg, setSelectedImg] = useState(
+    isEditCategory && existingCategory ? existingCategory.img : ""
+  );
 
-  const handleAddCategory = () => {
+  const handleSaveCategory = () => {
     if (!title.trim()) {
       if (!toast.isActive("enterCategory")) {
         toast.error("Please enter a category!!!", {
@@ -26,7 +33,15 @@ function AddCategory({
         });
       }
     } else {
-      addNewCategory({ title, img: selectedImg });
+      if (isEditCategory) {
+        updateCategory({
+          originalTitle: existingCategory.title,
+          title,
+          img: selectedImg,
+        });
+      } else {
+        addNewCategory({ title, img: selectedImg });
+      }
       setTitle("");
       setSelectedImg("");
     }
@@ -38,7 +53,9 @@ function AddCategory({
       ref={addCategoryRef}
     >
       <div className="add-categories add-task-backdrop"></div>
-      <h1 className="heading">Add Category</h1>
+      <h1 className="heading">
+        {isEditCategory ? "Edit Category" : "Add Category"}
+      </h1>
       <div className="input-group">
         <label htmlFor="task-input"> Category </label>
         <input
@@ -66,8 +83,8 @@ function AddCategory({
         <button className="cancel-btn" onClick={toggleAddCategory}>
           Cancel
         </button>
-        <button className="add-btn" onClick={handleAddCategory}>
-          Add
+        <button className="add-btn" onClick={handleSaveCategory}>
+          {isEditCategory ? "Save Changes" : "Add"}
         </button>
       </div>
     </div>

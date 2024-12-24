@@ -8,10 +8,13 @@ function AddTask({
   addNewTask,
   categories,
   toggleAddTask,
+  isEditingTask,
+  taskToEdit,
+  updateTask,
 }) {
-  const [newTask, setNewTask] = useState("");
+  const [newTask, setNewTask] = useState(taskToEdit ? taskToEdit.task : "");
 
-  const handleAddTask = () => {
+  const handleSaveTask = () => {
     if (!newTask.trim()) {
       if (!toast.isActive("enterTask")) {
         toast.error("Please enter a task!!!", {
@@ -19,12 +22,16 @@ function AddTask({
         });
       }
     } else {
-      addNewTask({
-        id: Date.now(),
-        task: newTask,
-        category: categories,
-        completed: false,
-      });
+      if (isEditingTask) {
+        updateTask({ ...taskToEdit, task: newTask });
+      } else {
+        addNewTask({
+          id: Date.now(),
+          task: newTask,
+          category: categories,
+          completed: false,
+        });
+      }
       setNewTask("");
     }
   };
@@ -32,7 +39,7 @@ function AddTask({
   return (
     <div className={`add-task ${addTasks ? "active" : ""}`} ref={addTaskRef}>
       <div className="add-tasks add-task-backdrop"></div>
-      <h1 className="heading">Add Task</h1>
+      <h1 className="heading">{isEditingTask ? "Edit Task" : "Add Task"}</h1>
       <div className="input-group">
         <label htmlFor="task-input"> Task </label>
         <input
@@ -47,8 +54,8 @@ function AddTask({
         <button className="cancel-btn" onClick={toggleAddTask}>
           Cancel
         </button>
-        <button className="add-btn" onClick={handleAddTask}>
-          Add
+        <button className="add-btn" onClick={handleSaveTask}>
+          {isEditingTask ? "Save Changes" : "Add"}
         </button>
       </div>
     </div>

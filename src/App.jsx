@@ -17,6 +17,10 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showCategoryScreen, setShowCategoryScreen] = useState(false);
   const addCategoryRef = useRef(null);
+  const [isEditCategory, setIsEditCategory] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [isEditingTask, setIsEditingTask] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
 
   const toggleAddCategory = () => {
     setAddCategory(!addCategory);
@@ -60,7 +64,9 @@ function App() {
     toast.success("Category updated successfully!", {
       toastId: "categoryUpdated",
     });
-    setShowCategoryScreen(false);
+    setAddCategory(false);
+    setIsEditCategory(false);
+    setEditingCategory(null);
   };
 
   const toggleCategoryScreen = (category) => {
@@ -81,6 +87,18 @@ function App() {
     toast.success("Task deleted!", {
       toastId: "taskDeleted",
     });
+  };
+
+  const updateTask = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
+    toast.success("Task updated successfully!", {
+      toastId: "taskUpdated",
+    });
+    setIsEditingTask(false);
+    setTaskToEdit(null);
+    setAddTasks(false);
   };
 
   const toggleTaskCompletion = (id) => {
@@ -125,6 +143,9 @@ function App() {
         tasks={tasks}
         toggleCategoryScreen={toggleCategoryScreen}
         deleteCategory={deleteCategory}
+        toggleAddCategory={toggleAddCategory}
+        setIsEditCategory={setIsEditCategory}
+        setEditingCategory={setEditingCategory}
       />
       {selectedCategory && (
         <CategoryScreen
@@ -133,6 +154,9 @@ function App() {
           deleteTask={deleteTask}
           toggleTaskCompletion={toggleTaskCompletion}
           back={() => setShowCategoryScreen(false)}
+          toggleAddTask={toggleAddTask}
+          setIsEditingTask={setIsEditingTask}
+          setTaskToEdit={setTaskToEdit}
         />
       )}
       <div
@@ -176,6 +200,9 @@ function App() {
           addNewTask={addNewTask}
           categories={selectedCategory.title}
           toggleAddTask={toggleAddTask}
+          isEditingTask={isEditingTask}
+          taskToEdit={taskToEdit}
+          updateTask={updateTask}
         />
       )}
       {addCategory && (
@@ -185,6 +212,9 @@ function App() {
           categoryImages={categoryImages}
           addCategory={addCategory}
           toggleAddCategory={toggleAddCategory}
+          updateCategory={updateCategory}
+          isEditCategory={isEditCategory}
+          existingCategory={editingCategory}
         />
       )}
     </div>
