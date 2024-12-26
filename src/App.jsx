@@ -35,15 +35,42 @@ function App() {
   };
 
   const deleteCategory = (title) => {
-    setCategories((prevCategories) =>
-      prevCategories.filter((category) => category.title !== title)
+    const confirmToast = () => {
+      setCategories((prevCategories) =>
+        prevCategories.filter((category) => category.title !== title)
+      );
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task.category !== title)
+      );
+      toast.success("Category deleted!", {
+        toastId: "categoryDeleted",
+      });
+    };
+    toast(
+      ({ closeToast }) => (
+        <div className="alert-box">
+          <p>Are you sure you want to delete the category "{title}"?</p>
+          <div className="alert-box-btn">
+            <button
+              className="confirm-btn alert-btn"
+              onClick={() => {
+                confirmToast();
+                closeToast();
+              }}
+            >
+              Confirm
+            </button>
+            <button className="cancel-btns alert-btn" onClick={closeToast}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        toastId: "confirmation-toast",
+      }
     );
-    setTasks((prevTasks) =>
-      prevTasks.filter((task) => task.category !== title)
-    );
-    toast.success("Category deleted!", {
-      toastId: "categoryDeleted",
-    });
   };
 
   const updateCategory = (updatedCategory) => {
@@ -83,10 +110,71 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-    toast.success("Task deleted!", {
-      toastId: "taskDeleted",
-    });
+    const confirmToast = () => {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+      toast.success("Task deleted!", {
+        toastId: "taskDeleted",
+      });
+    };
+    toast(
+      ({ closeToast }) => (
+        <div className="alert-box">
+          <p>Are you sure you want to delete the task?</p>
+          <div className="alert-box-btn">
+            <button
+              className="confirm-btn alert-btn"
+              onClick={() => {
+                confirmToast();
+                closeToast();
+              }}
+            >
+              Confirm
+            </button>
+            <button className="cancel-btns alert-btn" onClick={closeToast}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        toastId: "confirmation-toast",
+      }
+    );
+  };
+
+  const deleteAllTasks = () => {
+    const confirmToast = () => {
+      setTasks([]);
+      toast.success("All Task deleted!", {
+        toastId: "allTaskDeleted",
+      });
+    };
+    toast(
+      ({ closeToast }) => (
+        <div className="alert-box">
+          <p>Are you sure you want to delete all the task?</p>
+          <div className="alert-box-btn">
+            <button
+              className="confirm-btn alert-btn"
+              onClick={() => {
+                confirmToast();
+                closeToast();
+              }}
+            >
+              Confirm
+            </button>
+            <button className="cancel-btns alert-btn" onClick={closeToast}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false,
+        toastId: "confirmation-toast",
+      }
+    );
   };
 
   const updateTask = (updatedTask) => {
@@ -157,13 +245,14 @@ function App() {
           toggleAddTask={toggleAddTask}
           setIsEditingTask={setIsEditingTask}
           setTaskToEdit={setTaskToEdit}
+          deleteAllTasks={deleteAllTasks}
         />
       )}
       <div
         className={`add-task-btn ${
           showCategoryScreen && addTasks
             ? "add-tasks-btm active"
-            : !showCategoryScreen && addCategory
+            : addCategory
             ? "active"
             : ""
         }`}
@@ -188,7 +277,7 @@ function App() {
         className={`black-backdrop ${
           showCategoryScreen && addTasks
             ? "active"
-            : !showCategoryScreen && addCategory
+            : addCategory
             ? "active"
             : ""
         }`}

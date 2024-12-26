@@ -1,5 +1,8 @@
 import React from "react";
 import boy from "../assets/images/boy.png";
+import { createAvatar } from "@dicebear/core";
+import { adventurer } from "@dicebear/collection";
+import "@dicebear/adventurer";
 
 function HomeScreen({
   categories,
@@ -10,6 +13,13 @@ function HomeScreen({
   setIsEditCategory,
   setEditingCategory,
 }) {
+  const avatar = createAvatar(adventurer, {
+    seed: "Aneka",
+    // ... other options
+  });
+
+  const svg = avatar.toDataUri();
+
   return (
     <div className="home-screen screen">
       <div className="head-wrapper">
@@ -38,7 +48,7 @@ function HomeScreen({
           </div>
           <div className="img">
             <div className="backdrop"></div>
-            <img src={boy} alt="" />
+            <img src={svg} alt="" />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function CategoryScreen({
   category,
@@ -9,10 +9,31 @@ function CategoryScreen({
   toggleAddTask,
   setIsEditingTask,
   setTaskToEdit,
+  deleteAllTasks,
 }) {
+  const [showOptions, setShowOptions] = useState(false);
+  const optionsRef = useRef(null);
+
   const categoryTasks = tasks.filter(
     (task) => task.category.toLowerCase() === category.title.toLowerCase()
   );
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleOutsideClick = (event) => {
+    if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+      setShowOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="category-screen screen">
@@ -33,7 +54,7 @@ function CategoryScreen({
             />
           </svg>
         </div>
-        <div className="options">
+        <div className="options" ref={optionsRef} onClick={toggleOptions}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -48,6 +69,29 @@ function CategoryScreen({
               d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
             />
           </svg>
+          {showOptions && (
+            <div className="dropdown-menu">
+              {/* <div
+                className="dropdown-item"
+                onClick={() => {
+                  toggleAddCategory();
+                  setIsEditCategory(true);
+                  setEditingCategory(category);
+                }}
+              >
+                Edit
+              </div> */}
+              <div
+                className="dropdown-item"
+                onClick={() => {
+                  deleteAllTasks();
+                  setShowOptions(false);
+                }}
+              >
+                Delete All
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="category-details">
