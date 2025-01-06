@@ -5,7 +5,7 @@ function LayoutRoutes() {
   return (
     <Router>
       <Routes>
-        <Route />
+        <Route path="" />
       </Routes>
     </Router>
   );
