@@ -126,7 +126,7 @@ function HomeScreen({
           ) : (
             <div className="category" style={{ justifyContent: "center" }}>
               <div className="no-categories">
-                <p>No categories added yet!</p>
+                <p>No categories added!</p>
               </div>
             </div>
           )}
