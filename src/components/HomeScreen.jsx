@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import boy from "../assets/images/boy.png";
 import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import "@dicebear/adventurer";
+import { TaskContext } from "./context/TaskContext";
 
-function HomeScreen({
-  categories,
-  tasks,
-  toggleCategoryScreen,
-  deleteCategory,
-  toggleAddCategory,
-  setIsEditCategory,
-  setEditingCategory,
-}) {
+function HomeScreen(
+  {
+    // categories,
+    // tasks,
+    // toggleCategoryScreen,
+    // deleteCategory,
+    // toggleAddCategory,
+    // setIsEditCategory,
+    // setEditingCategory,
+  }
+) {
+  const {
+    categories,
+    tasks,
+    toggleCategoryScreen,
+    deleteCategory,
+    toggleAddCategory,
+    setIsEditCategory,
+    setEditingCategory,
+  } = useContext(TaskContext);
+
   const avatar = createAvatar(adventurer, {
     seed: "Aneka",
     // ... other options

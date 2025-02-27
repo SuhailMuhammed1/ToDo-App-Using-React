@@ -1,18 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { TaskContext } from "./context/TaskContext";
+import { useNavigate } from "react-router-dom";
 
-function CategoryScreen({
-  category,
-  tasks,
-  deleteTask,
-  toggleTaskCompletion,
-  back,
-  toggleAddTask,
-  setIsEditingTask,
-  setTaskToEdit,
-  deleteAllTasks,
-}) {
+function CategoryScreen(
+  {
+    // category,
+    // tasks,
+    // deleteTask,
+    // toggleTaskCompletion,
+    // back,
+    // toggleAddTask,
+    // setIsEditingTask,
+    // setTaskToEdit,
+    // deleteAllTasks,
+  }
+) {
+  const {
+    category,
+    tasks,
+    deleteTask,
+    toggleTaskCompletion,
+    toggleAddTask,
+    setIsEditingTask,
+    setTaskToEdit,
+    deleteAllTasks,
+  } = useContext(TaskContext);
+
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
+  const navigate = useNavigate();
 
   const categoryTasks = tasks.filter(
     (task) => task.category.toLowerCase() === category.title.toLowerCase()
@@ -38,7 +54,7 @@ function CategoryScreen({
   return (
     <div className="category-screen screen">
       <div className="head-wrapper">
-        <div className="back-btn" onClick={back}>
+        <div className="back-btn" onClick={() => navigate("/")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
