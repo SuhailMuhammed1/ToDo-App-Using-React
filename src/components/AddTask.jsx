@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TaskContext } from "./context/TaskContext";
 
-function AddTask({
-  addTasks,
-  addTaskRef,
-  addNewTask,
-  categories,
-  toggleAddTask,
-  isEditingTask,
-  taskToEdit,
-  updateTask,
-}) {
+function AddTask(
+  {
+    // addTasks,
+    // addTaskRef,
+    // addNewTask,
+    // categories,
+    // toggleAddTask,
+    // isEditingTask,
+    // taskToEdit,
+    // updateTask,
+  }
+) {
+  const {
+    isAddTaskOpen,
+    closeAddTask,
+    addTasks,
+    addTaskRef,
+    addNewTask,
+    categories,
+    toggleAddTask,
+    isEditingTask,
+    taskToEdit,
+    updateTask,
+  } = useContext(TaskContext);
+
   const [newTask, setNewTask] = useState(taskToEdit ? taskToEdit.task : "");
 
   const handleSaveTask = () => {
@@ -36,6 +52,8 @@ function AddTask({
     }
   };
 
+  if (!isAddTaskOpen) return null;
+
   return (
     <div className={`add-task ${addTasks ? "active" : ""}`} ref={addTaskRef}>
       <div className="add-tasks add-task-backdrop"></div>
@@ -53,6 +71,9 @@ function AddTask({
       <div className="btns">
         <button className="cancel-btn" onClick={toggleAddTask}>
           Cancel
+        </button>
+        <button className="cancel-btn" onClick={closeAddTask}>
+          Cancel2
         </button>
         <button className="add-btn" onClick={handleSaveTask}>
           {isEditingTask ? "Save Changes" : "Add"}

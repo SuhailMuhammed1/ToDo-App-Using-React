@@ -1,22 +1,37 @@
 import React, { useState } from "react";
+import { categoryImages } from "./Data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function AddCategory({
-  addCategoryRef,
-  addNewCategory,
-  categoryImages,
-  addCategory,
-  toggleAddCategory,
-  updateCategory,
-  isEditCategory = false,
-  existingCategory = null,
-}) {
+function AddCategory(
+  {
+    // addCategoryRef,
+    // addNewCategory,
+    // categoryImages,
+    // addCategory,
+    // toggleAddCategory,
+    // updateCategory,
+    // isEditCategory = false,
+    // existingCategory = null,
+  }
+) {
+  const {
+    isAddCategoryOpen,
+    closeAddCategory,
+    addCategoryRef,
+    addNewCategory,
+    addCategory,
+    toggleAddCategory,
+    isEditCategory,
+    editingCategory,
+    updateCategory,
+  } = useContext(TaskContext);
+
   const [title, setTitle] = useState(
-    isEditCategory && existingCategory ? existingCategory.title : ""
+    isEditCategory && editingCategory ? editingCategory.title : ""
   );
   const [selectedImg, setSelectedImg] = useState(
-    isEditCategory && existingCategory ? existingCategory.img : ""
+    isEditCategory && editingCategory ? editingCategory.img : ""
   );
 
   const handleSaveCategory = () => {
@@ -35,7 +50,7 @@ function AddCategory({
     } else {
       if (isEditCategory) {
         updateCategory({
-          originalTitle: existingCategory.title,
+          originalTitle: editingCategory.title,
           title,
           img: selectedImg,
         });
@@ -46,6 +61,8 @@ function AddCategory({
       setSelectedImg("");
     }
   };
+
+  if (!isAddCategoryOpen) return null;
 
   return (
     <div
@@ -83,6 +100,7 @@ function AddCategory({
         <button className="cancel-btn" onClick={toggleAddCategory}>
           Cancel
         </button>
+        <button onClick={closeAddCategory}>Cancel2</button>
         <button className="add-btn" onClick={handleSaveCategory}>
           {isEditCategory ? "Save Changes" : "Add"}
         </button>

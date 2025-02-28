@@ -12,6 +12,8 @@ export const TaskProvider = ({ children }) => {
   const [showCategoryScreen, setShowCategoryScreen] = useState(false);
 
   // States for modals
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const [addTasks, setAddTasks] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
   const [isEditCategory, setIsEditCategory] = useState(false);
@@ -24,11 +26,20 @@ export const TaskProvider = ({ children }) => {
   const addCategoryRef = useRef(null);
 
   // **Category Functions**
+  const openAddCategory = () => setIsAddCategoryOpen(true);
+
+  const closeAddCategory = () => {
+    setIsAddCategoryOpen(false);
+    setIsEditCategory(false);
+    setEditingCategory(null);
+  };
+
   const toggleAddCategory = () => setAddCategory(!addCategory);
 
   const addNewCategory = (newCategory) => {
     setCategories([...categories, newCategory]);
     setAddCategory(false);
+    closeAddCategory();
     toast.success("Category added successfully!", { toastId: "categoryAdded" });
   };
 
@@ -80,8 +91,9 @@ export const TaskProvider = ({ children }) => {
       toastId: "categoryUpdated",
     });
     setAddCategory(false);
-    setIsEditCategory(false);
-    setEditingCategory(null);
+    // setIsEditCategory(false);
+    // setEditingCategory(null);
+    closeAddCategory();
   };
 
   const toggleCategoryScreen = (category) => {
@@ -90,11 +102,20 @@ export const TaskProvider = ({ children }) => {
   };
 
   // **Task Functions**
+  const openAddTask = () => setIsAddTaskOpen(true);
+
+  const closeAddTask = () => {
+    setIsAddTaskOpen(false);
+    setIsEditingTask(false);
+    setTaskToEdit(null);
+  };
+
   const toggleAddTask = () => setAddTasks(!addTasks);
 
   const addNewTask = (newTask) => {
     setTasks([...tasks, newTask]);
     setAddTasks(false);
+    closeAddTask();
     toast.success("Task added successfully!", { toastId: "taskAdded" });
   };
 
@@ -171,9 +192,10 @@ export const TaskProvider = ({ children }) => {
       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
     toast.success("Task updated successfully!", { toastId: "taskUpdated" });
-    setIsEditingTask(false);
-    setTaskToEdit(null);
+    // setIsEditingTask(false);
+    // setTaskToEdit(null);
     setAddTasks(false);
+    closeAddTask();
   };
 
   const toggleTaskCompletion = (id) => {
@@ -209,6 +231,8 @@ export const TaskProvider = ({ children }) => {
         categories,
         selectedCategory,
         showCategoryScreen,
+        isAddTaskOpen,
+        isAddCategoryOpen,
         addTasks,
         addCategory,
         isEditCategory,
@@ -217,11 +241,15 @@ export const TaskProvider = ({ children }) => {
         taskToEdit,
         addTaskRef,
         addCategoryRef,
+        openAddCategory,
+        closeAddCategory,
         toggleAddCategory,
         addNewCategory,
         deleteCategory,
         updateCategory,
         toggleCategoryScreen,
+        openAddTask,
+        closeAddTask,
         toggleAddTask,
         addNewTask,
         deleteTask,
