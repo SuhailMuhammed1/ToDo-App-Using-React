@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "./context/TaskContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function CategoryScreen(
   {
@@ -16,7 +16,8 @@ function CategoryScreen(
   }
 ) {
   const {
-    category,
+    selectedCategory,
+    setShowCategoryScreen,
     tasks,
     deleteTask,
     toggleTaskCompletion,
@@ -26,12 +27,19 @@ function CategoryScreen(
     deleteAllTasks,
   } = useContext(TaskContext);
 
+  // const { categoryName } = useParams(); // Get category from URL
+
+  // Find the category based on the URL param
+  // const category = categories.find(
+  //   (cat) => cat.title.toLowerCase() === categoryName.toLowerCase()
+  // );
+
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
-  const navigate = useNavigate();
 
   const categoryTasks = tasks.filter(
-    (task) => task.category.toLowerCase() === category.title.toLowerCase()
+    (task) =>
+      task.category.toLowerCase() === selectedCategory.title.toLowerCase()
   );
 
   const toggleOptions = () => {
@@ -54,7 +62,7 @@ function CategoryScreen(
   return (
     <div className="category-screen screen">
       <div className="head-wrapper">
-        <div className="back-btn" onClick={() => navigate("/")}>
+        <div className="back-btn" onClick={() => setShowCategoryScreen(false)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -111,10 +119,14 @@ function CategoryScreen(
         </div>
       </div>
       <div className="category-details">
-        <img src={category.img} alt={category.title} id="category-img" />
+        <img
+          src={selectedCategory.img}
+          alt={selectedCategory.title}
+          id="category-img"
+        />
         <div className="details">
           <p id="num-tasks">{categoryTasks.length} tasks</p>
-          <h1 id="category-title">{category.title}</h1>
+          <h1 id="category-title">{selectedCategory.title}</h1>
         </div>
       </div>
       <div className="tasks-wrapper">
@@ -193,7 +205,9 @@ function CategoryScreen(
               </div>
             ))
           ) : (
-            <p className="no-tasks">No tasks added in {category.title}!</p>
+            <p className="no-tasks">
+              No tasks added in {selectedCategory.title}!
+            </p>
           )}
         </div>
       </div>

@@ -17,15 +17,13 @@ function AddCategory(
   }
 ) {
   const {
-    isAddCategoryOpen,
-    closeAddCategory,
     addCategoryRef,
     addNewCategory,
     addCategory,
     toggleAddCategory,
-    isEditCategory,
-    editingCategory,
     updateCategory,
+    isEditCategory = false,
+    editingCategory = null,
   } = useContext(TaskContext);
 
   const [title, setTitle] = useState(
@@ -63,8 +61,6 @@ function AddCategory(
     }
   };
 
-  if (!isAddCategoryOpen) return null;
-
   return (
     <div
       className={`add-task ${addCategory ? "active" : ""}`}
@@ -101,7 +97,6 @@ function AddCategory(
         <button className="cancel-btn" onClick={toggleAddCategory}>
           Cancel
         </button>
-        <button onClick={closeAddCategory}>Cancel2</button>
         <button className="add-btn" onClick={handleSaveCategory}>
           {isEditCategory ? "Save Changes" : "Add"}
         </button>

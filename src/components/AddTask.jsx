@@ -16,12 +16,10 @@ function AddTask(
   }
 ) {
   const {
-    isAddTaskOpen,
-    closeAddTask,
     addTasks,
     addTaskRef,
     addNewTask,
-    categories,
+    selectedCategory,
     toggleAddTask,
     isEditingTask,
     taskToEdit,
@@ -44,15 +42,13 @@ function AddTask(
         addNewTask({
           id: Date.now(),
           task: newTask,
-          category: categories,
+          category: selectedCategory.title,
           completed: false,
         });
       }
       setNewTask("");
     }
   };
-
-  if (!isAddTaskOpen) return null;
 
   return (
     <div className={`add-task ${addTasks ? "active" : ""}`} ref={addTaskRef}>
@@ -71,9 +67,6 @@ function AddTask(
       <div className="btns">
         <button className="cancel-btn" onClick={toggleAddTask}>
           Cancel
-        </button>
-        <button className="cancel-btn" onClick={closeAddTask}>
-          Cancel2
         </button>
         <button className="add-btn" onClick={handleSaveTask}>
           {isEditingTask ? "Save Changes" : "Add"}

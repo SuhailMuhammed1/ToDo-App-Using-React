@@ -12,8 +12,6 @@ export const TaskProvider = ({ children }) => {
   const [showCategoryScreen, setShowCategoryScreen] = useState(false);
 
   // States for modals
-  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
-  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const [addTasks, setAddTasks] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
   const [isEditCategory, setIsEditCategory] = useState(false);
@@ -26,20 +24,11 @@ export const TaskProvider = ({ children }) => {
   const addCategoryRef = useRef(null);
 
   // **Category Functions**
-  const openAddCategory = () => setIsAddCategoryOpen(true);
-
-  const closeAddCategory = () => {
-    setIsAddCategoryOpen(false);
-    setIsEditCategory(false);
-    setEditingCategory(null);
-  };
-
   const toggleAddCategory = () => setAddCategory(!addCategory);
 
   const addNewCategory = (newCategory) => {
-    setCategories([...categories, newCategory]);
+    setCategories((prevCategories) => [...prevCategories, newCategory]);
     setAddCategory(false);
-    closeAddCategory();
     toast.success("Category added successfully!", { toastId: "categoryAdded" });
   };
 
@@ -52,8 +41,12 @@ export const TaskProvider = ({ children }) => {
             <button
               className="confirm-btn alert-btn"
               onClick={() => {
-                setCategories(categories.filter((c) => c.title !== title));
-                setTasks(tasks.filter((task) => task.category !== title));
+                setCategories((prevCategories) =>
+                  prevCategories.filter((c) => c.title !== title)
+                );
+                setTasks((prevTasks) =>
+                  prevTasks.filter((task) => task.category !== title)
+                );
                 toast.success("Category deleted!", {
                   toastId: "categoryDeleted",
                 });
@@ -73,15 +66,15 @@ export const TaskProvider = ({ children }) => {
   };
 
   const updateCategory = (updatedCategory) => {
-    setCategories(
-      categories.map((category) =>
+    setCategories((prevCategories) =>
+      prevCategories.map((category) =>
         category.title === updatedCategory.originalTitle
           ? { title: updatedCategory.title, img: updatedCategory.img }
           : category
       )
     );
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
         task.category === updatedCategory.originalTitle
           ? { ...task, category: updatedCategory.title }
           : task
@@ -91,37 +84,27 @@ export const TaskProvider = ({ children }) => {
       toastId: "categoryUpdated",
     });
     setAddCategory(false);
-    // setIsEditCategory(false);
-    // setEditingCategory(null);
-    closeAddCategory();
+    setIsEditCategory(false);
+    setEditingCategory(null);
   };
 
   const toggleCategoryScreen = (category) => {
     setSelectedCategory(category);
-    setShowCategoryScreen(true);
+    setShowCategoryScreen(!showCategoryScreen);
   };
 
   // **Task Functions**
-  const openAddTask = () => setIsAddTaskOpen(true);
-
-  const closeAddTask = () => {
-    setIsAddTaskOpen(false);
-    setIsEditingTask(false);
-    setTaskToEdit(null);
-  };
-
   const toggleAddTask = () => setAddTasks(!addTasks);
 
   const addNewTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+    setTasks((prevTasks) => [...prevTasks, newTask]);
     setAddTasks(false);
-    closeAddTask();
     toast.success("Task added successfully!", { toastId: "taskAdded" });
   };
 
   const deleteTask = (id) => {
     const confirmToast = () => {
-      setTasks(tasks.filter((task) => task.id !== id));
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
       toast.success("Task deleted!", {
         toastId: "taskDeleted",
       });
@@ -188,19 +171,18 @@ export const TaskProvider = ({ children }) => {
   };
 
   const updateTask = (updatedTask) => {
-    setTasks(
-      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
     toast.success("Task updated successfully!", { toastId: "taskUpdated" });
-    // setIsEditingTask(false);
-    // setTaskToEdit(null);
+    setIsEditingTask(false);
+    setTaskToEdit(null);
     setAddTasks(false);
-    closeAddTask();
   };
 
   const toggleTaskCompletion = (id) => {
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
@@ -231,8 +213,6 @@ export const TaskProvider = ({ children }) => {
         categories,
         selectedCategory,
         showCategoryScreen,
-        isAddTaskOpen,
-        isAddCategoryOpen,
         addTasks,
         addCategory,
         isEditCategory,
@@ -241,15 +221,11 @@ export const TaskProvider = ({ children }) => {
         taskToEdit,
         addTaskRef,
         addCategoryRef,
-        openAddCategory,
-        closeAddCategory,
         toggleAddCategory,
         addNewCategory,
         deleteCategory,
         updateCategory,
         toggleCategoryScreen,
-        openAddTask,
-        closeAddTask,
         toggleAddTask,
         addNewTask,
         deleteTask,
