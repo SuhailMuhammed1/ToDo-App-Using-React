@@ -3,18 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TaskContext } from "./context/TaskContext";
 
-function AddTask(
-  {
-    // addTasks,
-    // addTaskRef,
-    // addNewTask,
-    // categories,
-    // toggleAddTask,
-    // isEditingTask,
-    // taskToEdit,
-    // updateTask,
-  }
-) {
+function AddTask() {
   const {
     addTasks,
     addTaskRef,

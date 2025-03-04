@@ -4,18 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TaskContext } from "./context/TaskContext";
 
-function AddCategory(
-  {
-    // addCategoryRef,
-    // addNewCategory,
-    // categoryImages,
-    // addCategory,
-    // toggleAddCategory,
-    // updateCategory,
-    // isEditCategory = false,
-    // existingCategory = null,
-  }
-) {
+function AddCategory() {
   const {
     addCategoryRef,
     addNewCategory,

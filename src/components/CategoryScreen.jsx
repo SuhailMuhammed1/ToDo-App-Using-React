@@ -2,19 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "./context/TaskContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-function CategoryScreen(
-  {
-    // category,
-    // tasks,
-    // deleteTask,
-    // toggleTaskCompletion,
-    // back,
-    // toggleAddTask,
-    // setIsEditingTask,
-    // setTaskToEdit,
-    // deleteAllTasks,
-  }
-) {
+function CategoryScreen() {
   const {
     selectedCategory,
     setShowCategoryScreen,
@@ -26,13 +14,6 @@ function CategoryScreen(
     setTaskToEdit,
     deleteAllTasks,
   } = useContext(TaskContext);
-
-  // const { categoryName } = useParams(); // Get category from URL
-
-  // Find the category based on the URL param
-  // const category = categories.find(
-  //   (cat) => cat.title.toLowerCase() === categoryName.toLowerCase()
-  // );
 
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);

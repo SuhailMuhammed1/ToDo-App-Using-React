@@ -5,17 +5,7 @@ import { adventurer } from "@dicebear/collection";
 import "@dicebear/adventurer";
 import { TaskContext } from "./context/TaskContext";
 
-function HomeScreen(
-  {
-    // categories,
-    // tasks,
-    // toggleCategoryScreen,
-    // deleteCategory,
-    // toggleAddCategory,
-    // setIsEditCategory,
-    // setEditingCategory,
-  }
-) {
+function HomeScreen() {
   const {
     categories,
     tasks,
