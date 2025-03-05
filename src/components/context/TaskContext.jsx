@@ -47,7 +47,7 @@ export const TaskProvider = ({ children }) => {
                 setTasks((prevTasks) =>
                   prevTasks.filter((task) => task.category !== title)
                 );
-                toast.success("Category deleted!", {
+                toast.error("Category deleted!", {
                   toastId: "categoryDeleted",
                 });
                 closeToast();
@@ -80,7 +80,7 @@ export const TaskProvider = ({ children }) => {
           : task
       )
     );
-    toast.success("Category updated successfully!", {
+    toast.info("Category updated successfully!", {
       toastId: "categoryUpdated",
     });
     setAddCategory(false);
@@ -105,7 +105,7 @@ export const TaskProvider = ({ children }) => {
   const deleteTask = (id) => {
     const confirmToast = () => {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-      toast.success("Task deleted!", {
+      toast.error("Task deleted!", {
         toastId: "taskDeleted",
       });
     };
@@ -139,7 +139,7 @@ export const TaskProvider = ({ children }) => {
   const deleteAllTasks = () => {
     const confirmToast = () => {
       setTasks([]);
-      toast.success("All Task deleted!", {
+      toast.error("All Task deleted!", {
         toastId: "allTaskDeleted",
       });
     };
@@ -174,7 +174,7 @@ export const TaskProvider = ({ children }) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
-    toast.success("Task updated successfully!", { toastId: "taskUpdated" });
+    toast.info("Task updated successfully!", { toastId: "taskUpdated" });
     setIsEditingTask(false);
     setTaskToEdit(null);
     setAddTasks(false);
@@ -186,7 +186,7 @@ export const TaskProvider = ({ children }) => {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
-    toast.success("Task status updated!", { toastId: "taskCompleted" });
+    toast.success("Task completed!", { toastId: "taskCompleted" });
   };
 
   // Handle clicking outside of modals
@@ -205,6 +205,27 @@ export const TaskProvider = ({ children }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Add user state for authentication
+  const [user, setUser] = useState(() => {
+    // Check if user is stored in localStorage
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  // Save user to localStorage when it changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
+  // Logout function
+  const logout = () => {
+    setUser(null);
+  };
 
   return (
     <TaskContext.Provider
@@ -237,6 +258,9 @@ export const TaskProvider = ({ children }) => {
         setIsEditingTask,
         setTaskToEdit,
         setShowCategoryScreen,
+        user,
+        setUser,
+        logout,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "./context/TaskContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CategoryScreen() {
   const {
@@ -15,8 +15,15 @@ function CategoryScreen() {
     deleteAllTasks,
   } = useContext(TaskContext);
 
+  const navigate = useNavigate();
+
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
+
+  if (!selectedCategory) {
+    navigate("/");
+    return null;
+  }
 
   const categoryTasks = tasks.filter(
     (task) =>
@@ -43,7 +50,13 @@ function CategoryScreen() {
   return (
     <div className="category-screen screen">
       <div className="head-wrapper">
-        <div className="back-btn" onClick={() => setShowCategoryScreen(false)}>
+        <div
+          className="back-btn"
+          onClick={() => {
+            setShowCategoryScreen(false);
+            navigate("/");
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

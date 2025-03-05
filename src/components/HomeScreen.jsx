@@ -4,6 +4,7 @@ import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import "@dicebear/adventurer";
 import { TaskContext } from "./context/TaskContext";
+import { useNavigate } from "react-router-dom";
 
 function HomeScreen() {
   const {
@@ -15,6 +16,8 @@ function HomeScreen() {
     setIsEditCategory,
     setEditingCategory,
   } = useContext(TaskContext);
+
+  const navigate = useNavigate();
 
   const avatar = createAvatar(adventurer, {
     seed: "Aneka",
@@ -62,7 +65,10 @@ function HomeScreen() {
               <div
                 className="category"
                 key={category.title}
-                onClick={() => toggleCategoryScreen(category)}
+                onClick={() => {
+                  toggleCategoryScreen(category);
+                  navigate(`/category/${category.title}`);
+                }}
               >
                 <div className="left">
                   <img src={category.img} alt={category.title} />

@@ -19,7 +19,7 @@ function Home() {
 
   return (
     <div className={`wrapper ${showCategoryScreen ? "show-category" : ""}`}>
-      <ToastContainer position="top-center" draggable />
+      <ToastContainer position="top-center" draggable autoClose={2000} />
       <div className="screen-backdrop"></div>
       <HomeScreen />
       {selectedCategory && <CategoryScreen />}

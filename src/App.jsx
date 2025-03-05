@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import { TaskProvider } from "./components/context/TaskContext";
-import Home from "./components/Home";
+import LayoutRoutes from "./components/LayoutRoutes";
 
 function App() {
   return (
     <TaskProvider>
-      <Home />
+      <LayoutRoutes />
     </TaskProvider>
   );
 }
