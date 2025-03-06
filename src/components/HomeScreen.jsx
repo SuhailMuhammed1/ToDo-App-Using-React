@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import boy from "../assets/images/boy.png";
+import React, { useContext, useState } from "react";
+import "../components/Authentication/AuthForm.css";
 import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import "@dicebear/adventurer";
@@ -15,16 +15,57 @@ function HomeScreen() {
     toggleAddCategory,
     setIsEditCategory,
     setEditingCategory,
+    user,
+    updateUserAvatar,
   } = useContext(TaskContext);
 
+  const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const navigate = useNavigate();
 
-  const avatar = createAvatar(adventurer, {
-    seed: "Aneka",
-    // ... other options
-  });
+  // Generate a list of avatar options
+  const generateAvatarOptions = () => {
+    const options = [];
+    const seeds = [
+      "Felix",
+      "Aneka",
+      "Jasper",
+      "Zoe",
+      "Leo",
+      "Mia",
+      "Oliver",
+      "Sophia",
+      "Nathan",
+      "Emma",
+      "Lucas",
+      "Isabella",
+    ];
 
-  const svg = avatar.toDataUri();
+    for (let i = 0; i < seeds.length; i++) {
+      const avatar = createAvatar(adventurer, {
+        seed: seeds[i],
+      });
+
+      options.push({
+        id: i,
+        seed: seeds[i],
+        svg: avatar.toDataUri(),
+      });
+    }
+
+    return options;
+  };
+
+  const avatarOptions = generateAvatarOptions();
+
+  const handleAvatarSelect = (seed) => {
+    const avatar = createAvatar(adventurer, {
+      seed: seed,
+    });
+
+    const svg = avatar.toDataUri();
+    updateUserAvatar(svg, seed);
+    setShowAvatarSelector(false);
+  };
 
   return (
     <div className="home-screen screen">
@@ -47,16 +88,59 @@ function HomeScreen() {
         </div>
         <div className="welcome">
           <div className="content">
-            <h1>Hello John</h1>
+            <h1>Hello {user?.name || "User"}</h1>
             <p>
               Today you have <span id="total-tasks">{tasks.length}</span> tasks
             </p>
           </div>
-          <div className="img">
+          <div
+            className="img"
+            onClick={() => setShowAvatarSelector(!showAvatarSelector)}
+          >
             <div className="backdrop"></div>
-            <img src={svg} alt="" />
+            {user?.avatar ? (
+              <img src={user.avatar || "/placeholder.svg"} alt="User avatar" />
+            ) : (
+              <div className="plus-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Avatar selector */}
+        {showAvatarSelector && (
+          <div className="avatar-selector">
+            <h3>Choose an avatar</h3>
+            <div className="avatar-options">
+              {avatarOptions.map((option) => (
+                <div
+                  key={option.id}
+                  className="avatar-option"
+                  onClick={() => handleAvatarSelect(option.seed)}
+                >
+                  <img
+                    src={option.svg || "/placeholder.svg"}
+                    alt={`Avatar option ${option.id}`}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="categories-wrapper">
         <div className="categories">

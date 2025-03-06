@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
+import "./AuthForm.css";
 import { Link, useNavigate } from "react-router-dom";
-import { createAvatar } from "@dicebear/core";
-import { adventurer } from "@dicebear/collection";
 import { TaskContext } from "../context/TaskContext";
 
 function Login() {
@@ -27,16 +26,8 @@ function Login() {
     const userData = {
       name: "John", // This would come from your API response
       email: email,
+      avatar: null,
     };
-
-    // Generate avatar for the user
-    const avatar = createAvatar(adventurer, {
-      seed: email,
-      // You can add other options here
-    });
-
-    const svg = avatar.toDataUri();
-    userData.avatar = svg;
 
     // Set user in context or localStorage
     setUser(userData);

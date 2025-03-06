@@ -222,6 +222,18 @@ export const TaskProvider = ({ children }) => {
     }
   }, [user]);
 
+  // Update user avatar
+  const updateUserAvatar = (avatarSvg, seed) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        avatar: avatarSvg,
+        avatarSeed: seed,
+      };
+      setUser(updatedUser);
+    }
+  };
+
   // Logout function
   const logout = () => {
     setUser(null);
@@ -260,6 +272,7 @@ export const TaskProvider = ({ children }) => {
         setShowCategoryScreen,
         user,
         setUser,
+        updateUserAvatar,
         logout,
       }}
     >
