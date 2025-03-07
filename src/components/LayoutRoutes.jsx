@@ -11,6 +11,8 @@ import Home from "./Home";
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import { TaskContext } from "./context/TaskContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function LayoutRoutes() {
   const { user } = useContext(TaskContext);
@@ -24,18 +26,27 @@ function LayoutRoutes() {
   return (
     <Router>
       {/* <Home> */}
+      <ToastContainer position="top-center" draggable autoClose={2000} />
+
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/" element={<HomeScreen />} /> */}
         <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <HomeScreen />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route
           path="/"
           element={
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/category/:categoryTitle"
           element={
