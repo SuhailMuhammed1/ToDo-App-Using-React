@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./AuthForm.css";
 import { Link, useNavigate } from "react-router-dom";
 import { TaskContext } from "../context/TaskContext";
+import AuthForm from "./AuthForm";
 
 function Register() {
   const [name, setName] = useState("");
@@ -44,74 +45,45 @@ function Register() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="screen-backdrop"></div>
-
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>Task Manager</h1>
-          <p>Create a new account</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
-
-          <div className="input-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
-            />
-          </div>
-
-          <button type="submit" className="auth-button">
-            Register
-          </button>
-        </form>
-
-        <div className="auth-footer">
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
-      </div>
-    </div>
+    <AuthForm
+      title="Register"
+      subtitle="Create a new account"
+      fields={[
+        {
+          label: "Name",
+          type: "text",
+          value: name,
+          onChange: (e) => setName(e.target.value),
+          id: "name",
+        },
+        {
+          label: "Email",
+          type: "email",
+          value: email,
+          onChange: (e) => setEmail(e.target.value),
+          id: "email",
+        },
+        {
+          label: "Password",
+          type: "password",
+          value: password,
+          onChange: (e) => setPassword(e.target.value),
+          id: "password",
+        },
+        {
+          label: "Confirm Password",
+          type: "password",
+          value: confirmPassword,
+          onChange: (e) => setConfirmPassword(e.target.value),
+          id: "confirmPassword",
+        },
+      ]}
+      buttonText="Register"
+      onSubmit={handleSubmit}
+      error={error}
+      linkText="Already have an account?"
+      linkPath="/login"
+    />
   );
 }
 

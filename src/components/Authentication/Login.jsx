@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import "./AuthForm.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TaskContext } from "../context/TaskContext";
+import AuthForm from "./AuthForm";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -37,52 +37,31 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="screen-backdrop"></div>
-
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>Task Manager</h1>
-          <p>Login to your account</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
-
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <button type="submit" className="auth-button">
-            Login
-          </button>
-        </form>
-
-        <div className="auth-footer">
-          <p>
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
-        </div>
-      </div>
-    </div>
+    <AuthForm
+      title="Login"
+      subtitle="Login to your account"
+      fields={[
+        {
+          label: "Email",
+          type: "email",
+          value: email,
+          onChange: (e) => setEmail(e.target.value),
+          id: "email",
+        },
+        {
+          label: "Password",
+          type: "password",
+          value: password,
+          onChange: (e) => setPassword(e.target.value),
+          id: "password",
+        },
+      ]}
+      buttonText="Login"
+      onSubmit={handleSubmit}
+      error={error}
+      linkText="Don't have an account?"
+      linkPath="/register"
+    />
   );
 }
 

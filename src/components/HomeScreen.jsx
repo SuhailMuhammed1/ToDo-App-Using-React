@@ -26,8 +26,8 @@ function HomeScreen() {
   const generateAvatarOptions = () => {
     const options = [];
     const seeds = [
-      "Felix",
       "Aneka",
+      "Felix",
       "Jasper",
       "Zoe",
       "Leo",
