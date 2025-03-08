@@ -25,21 +25,21 @@ function LayoutRoutes() {
   };
   return (
     <Router>
-      {/* <Home> */}
-      <ToastContainer position="top-center" draggable autoClose={2000} />
+      <Home>
+        <ToastContainer position="top-center" draggable autoClose={2000} />
 
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              // <ProtectedRoute>
               <HomeScreen />
-            </ProtectedRoute>
-          }
-        />
-        {/* <Route
+              // </ProtectedRoute>
+            }
+          />
+          {/* <Route
           path="/"
           element={
             <ProtectedRoute>
@@ -47,16 +47,16 @@ function LayoutRoutes() {
             </ProtectedRoute>
           }
         /> */}
-        <Route
-          path="/category/:categoryTitle"
-          element={
-            <ProtectedRoute>
+          <Route
+            path="/category/:categoryTitle"
+            element={
+              // <ProtectedRoute>
               <CategoryScreen />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-      {/* </Home> */}
+              // </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Home>
     </Router>
   );
 }
