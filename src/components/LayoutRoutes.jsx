@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import HomeScreen from "./HomeScreen";
 import CategoryScreen from "./CategoryScreen";
-import Home from "./Home";
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import { TaskContext } from "./context/TaskContext";
@@ -25,38 +24,27 @@ function LayoutRoutes() {
   };
   return (
     <Router>
-      {/* <Home> */}
       <ToastContainer position="top-center" draggable autoClose={2000} />
-
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
           path="/"
           element={
-            // <ProtectedRoute>
-            <HomeScreen />
-            // </ProtectedRoute>
-          }
-        />
-        {/* <Route
-          path="/"
-          element={
             <ProtectedRoute>
-              <Home />
+              <HomeScreen />
             </ProtectedRoute>
           }
-        /> */}
+        />
         <Route
           path="/category/:categoryTitle"
           element={
-            // <ProtectedRoute>
-            <CategoryScreen />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <CategoryScreen />
+            </ProtectedRoute>
           }
         />
       </Routes>
-      {/* </Home> */}
     </Router>
   );
 }

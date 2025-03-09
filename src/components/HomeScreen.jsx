@@ -20,12 +20,7 @@ function HomeScreen() {
     setEditingCategory,
     user,
     updateUserAvatar,
-    showCategoryScreen,
-    selectedCategory,
     addCategory,
-    addTasks,
-    // toggleAddCategory,
-    toggleAddTask,
   } = useContext(TaskContext);
 
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
@@ -77,7 +72,7 @@ function HomeScreen() {
   };
 
   return (
-    <div className={`wrapper ${showCategoryScreen ? "show-category" : ""}`}>
+    <div className="wrapper">
       <div className="screen-backdrop"></div>
       <div className="home-screen screen">
         <div className="head-wrapper">
@@ -243,17 +238,11 @@ function HomeScreen() {
         </div>
       </div>
 
-      {selectedCategory && <CategoryScreen />}
+      {/* {selectedCategory && <CategoryScreen />} */}
 
       <div
-        className={`add-task-btn ${
-          showCategoryScreen && addTasks
-            ? "add-tasks-btm active"
-            : addCategory
-            ? "active"
-            : ""
-        }`}
-        onClick={showCategoryScreen ? toggleAddTask : toggleAddCategory}
+        className={`add-task-btn ${addCategory ? "active" : ""}`}
+        onClick={toggleAddCategory}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -271,19 +260,11 @@ function HomeScreen() {
         </svg>
       </div>
 
-      <div
-        className={`black-backdrop ${
-          showCategoryScreen && addTasks
-            ? "active"
-            : addCategory
-            ? "active"
-            : ""
-        }`}
-      ></div>
+      <div className={`black-backdrop ${addCategory ? "active" : ""}`}></div>
 
       {addCategory && <AddCategory />}
 
-      {showCategoryScreen && addTasks && <AddTask />}
+      {/* {showCategoryScreen && addTasks && <AddTask />} */}
     </div>
   );
 }
