@@ -125,7 +125,7 @@
     z-index: 0;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 600px) {
     .auth-card {
         width: 95%;
